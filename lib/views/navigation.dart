@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'product_list.dart';
 
 class NavigationScreen extends StatelessWidget {
   const NavigationScreen({super.key});
@@ -22,7 +23,7 @@ class NavigationScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const Placeholder(), 
+                    builder: (_) => ProductList(), 
                   ),
                 );
               },

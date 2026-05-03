@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bizconnect/splash_screen.dart';
-import 'views/product_list.dart';
+import 'views/navigation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       // Pantalla inicial será el Splash
       home: const SplashScreen(),
       routes: {
-        '/home': (context) => ProductList(),
+        '/home': (context) => const NavigationScreen(),
       },
     );
   }

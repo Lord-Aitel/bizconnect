@@ -1,4 +1,5 @@
 # bizconnect
+<<<<<<< HEAD
 
 A new Flutter project.
 
@@ -15,3 +16,6 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+=======
+Modulo-Dispositivos-Mobiles
+>>>>>>> 1e6fe93485a11121be317cf4f2a671a7207a5235

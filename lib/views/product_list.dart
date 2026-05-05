@@ -17,7 +17,7 @@ class ProductList extends StatelessWidget {
       description: "Miel pura de la Región de Los Ríos.",
     ),
   ];
-
+ 
   ProductList({super.key});
 
   @override

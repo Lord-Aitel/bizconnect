@@ -1,21 +1,46 @@
-# bizconnect
-<<<<<<< HEAD
+# BizConnect
 
-A new Flutter project.
+##  Descripción del Proyecto
+BizConnect es una maqueta funcional desarrollada en Flutter que busca digitalizar flujos de negocio locales (PYMES de Futrono y Valdivia).  
+El objetivo es ofrecer una aplicación móvil que permita visualizar productos, acceder a detalles y gestionar información de manera simple y escalable.
 
-## Getting Started
+##  Características propias del móvil
+- Interfaz modular y adaptable a distintos tamaños de pantalla.
+- Navegación jerárquica mediante **Splash → Drawer → Lista → Detalle → About**.
+- Uso de `ThemeData` global para identidad visual coherente.
+- Inclusión de imágenes y datos reales (ej. Café de Futrono, Miel de Valdivia).
+- Flujo optimizado para interacción táctil y navegación intuitiva.
 
-This project is a starting point for a Flutter application.
+##  Requerimientos
 
-A few resources to get you started if this is your first Flutter project:
+### Historias de Usuario
+- Como **cliente**, quiero ver una lista de productos, para decidir qué comprar.  
+- Como **usuario**, quiero acceder al detalle de un producto, para conocer sus características.  
+- Como **cliente**, quiero navegar fácilmente entre secciones, para encontrar información relevante.  
+- Como **usuario**, quiero ver una pantalla inicial (Splash), para identificar la aplicación antes de usarla.  
+- Como **usuario**, quiero acceder a una pantalla informativa (About), para conocer el propósito de la aplicación y el equipo de desarrollo.  
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+### Requerimientos Funcionales (RF)
+1. RF1: Implementar pantalla de acceso (SplashScreen).  
+2. RF2: Implementar menú de navegación (Drawer).  
+3. RF3: Implementar lista de productos con datos reales.  
+4. RF4: Implementar vista de detalle con parámetros.  
+5. RF5: Configurar rutas y navegación entre pantallas.  
+6. RF6: Implementar pantalla informativa (About).  
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-=======
-Modulo-Dispositivos-Mobiles
->>>>>>> 1e6fe93485a11121be317cf4f2a671a7207a5235
+### Requerimientos No Funcionales (RNF)
+1. RNF1: Arquitectura modular con separación de vistas, modelos y widgets.  
+2. RNF2: Identidad visual centralizada mediante `ThemeData`.  
+3. RNF3: Uso de imágenes y textos coherentes con el contexto local.  
+4. RNF4: Historial de commits atómicos y descriptivos en Git.  
+5. RNF5: Flujo adaptable a distintos dispositivos móviles.  
+
+##  Diagrama de Flujo del Caso de Uso Principal
+```mermaid
+flowchart TD
+    A[Splash Screen] --> B[Navigation Screen]
+    B -->|Drawer opción Productos| C[Lista de Productos]
+    C -->|Seleccionar producto| D[Detalle del Producto]
+    B -->|Drawer opción About| E[About Screen]
+
+

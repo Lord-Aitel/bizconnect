@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'product_list.dart';
+import '../about.dart';
 
 class NavigationScreen extends StatelessWidget {
   const NavigationScreen({super.key});
@@ -14,21 +15,31 @@ class NavigationScreen extends StatelessWidget {
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(color: Colors.deepPurple),
-              child: Text("Menú de navegación", style: TextStyle(color: Colors.white, fontSize: 20)),
+              child: Text(
+                "Menú de navegación",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
             ),
             ListTile(
-              leading: const Icon(Icons.list),
+              leading: const Icon(Icons.shopping_cart),
               title: const Text("Productos"),
               onTap: () {
-                Navigator.push(
+                Navigator.push(  
                   context,
-                  MaterialPageRoute(
-                    builder: (_) => ProductList(), 
-                  ),
+                  MaterialPageRoute(builder: (_) => ProductList()),
                 );
               },
             ),
-            // aqui se puede expandir con más opciones de navegación
+            ListTile(
+              leading: const Icon(Icons.info),
+              title: const Text("Acerca de"),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AboutScreen()),
+                );
+              },
+            ),
           ],
         ),
       ),

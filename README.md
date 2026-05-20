@@ -35,6 +35,7 @@ El objetivo es ofrecer una aplicación móvil que permita visualizar productos, 
 4. RNF4: Historial de commits atómicos y descriptivos en Git.  
 5. RNF5: Flujo adaptable a distintos dispositivos móviles.  
 
+```mermaid
 sequenceDiagram
     actor Usuario
     participant UI as Flutter UI
@@ -48,7 +49,7 @@ sequenceDiagram
     Dominio-->>UI: Procesa respuesta
     UI-->>Usuario: Muestra productos o mensaje de error
 
-
+```mermaid
 stateDiagram-v2
     [*] --> Idle
 

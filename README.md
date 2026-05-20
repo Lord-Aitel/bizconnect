@@ -35,10 +35,29 @@ El objetivo es ofrecer una aplicación móvil que permita visualizar productos, 
 4. RNF4: Historial de commits atómicos y descriptivos en Git.  
 5. RNF5: Flujo adaptable a distintos dispositivos móviles.  
 
-##  Diagrama de Flujo del Caso de Uso Principal
-```mermaid
-flowchart TD
-    A[Splash Screen] --> B[Navigation Screen]
-    B -->|Drawer opción Productos| C[Lista de Productos]
-    C -->|Seleccionar producto| D[Detalle del Producto]
-    B -->|Drawer opción About| E[About Screen]
+diagrama secuencia
+    actor Usuario
+    participant UI as Flutter UI
+    participant Dominio as Lógica de Negocio
+    participant Datos as Firebase
+
+    Usuario->>UI: Selecciona Local
+    UI->>Dominio: Solicita productos del Local
+    Dominio->>Datos: Consulta colección productos
+    Datos-->>Dominio: Retorna lista (éxito/error)
+    Dominio-->>UI: Procesa respuesta
+    UI-->>Usuario: Muestra productos o mensaje de error
+
+Diagrama estado
+    [*] --> Idle
+
+    Idle --> Loading: Usuario solicita productos
+    Loading --> ErrorConexion: Sin conexión a internet
+    Loading --> MostrandoProductos: Datos recibidos correctamente
+
+    ErrorConexion --> Reintento: Usuario pulsa "Reintentar"
+    Reintento --> Loading
+
+    ErrorConexion --> [*]: Usuario cierra la app
+    MostrandoProductos --> [*]: Usuario navega a otra pantalla
+

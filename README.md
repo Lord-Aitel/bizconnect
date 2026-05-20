@@ -34,7 +34,7 @@ El objetivo es ofrecer una aplicación móvil que permita visualizar productos, 
 3. RNF3: Uso de imágenes y textos coherentes con el contexto local.  
 4. RNF4: Historial de commits atómicos y descriptivos en Git.  
 5. RNF5: Flujo adaptable a distintos dispositivos móviles.  
-
+##  Diagrama1 
 ```mermaid
 sequenceDiagram
     actor Usuario
@@ -48,7 +48,7 @@ sequenceDiagram
     Datos-->>Dominio: Retorna lista (éxito/error)
     Dominio-->>UI: Procesa respuesta
     UI-->>Usuario: Muestra productos o mensaje de error
-
+ 
 ```mermaid
 stateDiagram-v2
     [*] --> Idle

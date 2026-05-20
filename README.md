@@ -42,5 +42,3 @@ flowchart TD
     B -->|Drawer opción Productos| C[Lista de Productos]
     C -->|Seleccionar producto| D[Detalle del Producto]
     B -->|Drawer opción About| E[About Screen]
-
-

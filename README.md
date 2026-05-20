@@ -35,7 +35,7 @@ El objetivo es ofrecer una aplicación móvil que permita visualizar productos, 
 4. RNF4: Historial de commits atómicos y descriptivos en Git.  
 5. RNF5: Flujo adaptable a distintos dispositivos móviles.  
 
-diagrama secuencia
+sequenceDiagram
     actor Usuario
     participant UI as Flutter UI
     participant Dominio as Lógica de Negocio
@@ -48,7 +48,8 @@ diagrama secuencia
     Dominio-->>UI: Procesa respuesta
     UI-->>Usuario: Muestra productos o mensaje de error
 
-Diagrama estado
+
+stateDiagram-v2
     [*] --> Idle
 
     Idle --> Loading: Usuario solicita productos
@@ -60,4 +61,5 @@ Diagrama estado
 
     ErrorConexion --> [*]: Usuario cierra la app
     MostrandoProductos --> [*]: Usuario navega a otra pantalla
+
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../firebase_service.dart';
+import '../../data/sources/firebase_service.dart';
 
 class CrearProductoScreen extends StatefulWidget {
   const CrearProductoScreen({super.key});

@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-
-// Importa tus pantallas
+import 'package:firebase_core/firebase_core.dart'; 
+import 'package:bizconnect/data/sources/firebase_options.dart';
 import 'presentation/views/splash_screen.dart';
-import 'presentation/views/navigation.dart';
-import 'presentation/views/productos_screen.dart';
-import 'presentation/views/locales_screen.dart'; 
+import 'presentation/views/locales_screen.dart';
+import 'presentation/views/product_list.dart';
+import 'presentation/views/product_detail.dart';
+import 'domain/entities/product.dart';
 
-void main() {
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const MyApp());
 }
 
@@ -18,32 +23,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'BizConnect',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // 🔹 Pantalla inicial: LocalesScreen (datos locales simulados)
-      home: const LocalesScreen(),
-
-      // 🔹 Definimos rutas dinámicas
-      onGenerateRoute: (settings) {
-        switch (settings.name) {
-          case '/productos':
-            final args = settings.arguments as Map<String, dynamic>?;
-
-            final String localId = args?['localId'] ?? "cafe_futrono";
-            final List<Map<String, dynamic>> productos =
-                args?['productos'] ?? [];
-
-            return MaterialPageRoute(
-              builder: (context) => ProductosScreen(
-                localId: localId,
-                productos: productos,
-              ),
-            );
-        }
-        return null;
+      home: const SplashScreen(),
+      routes: {
+        '/home': (context) => const LocalesScreen(),
+        '/productos': (context) {
+          final localId = ModalRoute.of(context)!.settings.arguments as String;
+          return ProductList(localId: localId);
+        },
+        '/detalle': (context) {
+          final product = ModalRoute.of(context)!.settings.arguments as Product;
+          return ProductDetail(product: product);
+        },
       },
     );
   }

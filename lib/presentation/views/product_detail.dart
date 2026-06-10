@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../data/models/product_model.dart';
+import '../../domain/entities/product.dart';
+
 
 class ProductDetail extends StatelessWidget {
   final Product product;
@@ -8,31 +9,31 @@ class ProductDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(product.name)),
-      body: SingleChildScrollView(
+      appBar: AppBar(title: Text(product.nombre)),
+      body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Mostrar imagen desde Firebase (URL)
-            product.imageUrl.isNotEmpty
-                ? Image.network(product.imageUrl, height: 200, fit: BoxFit.cover)
-                : Container(
-                    height: 200,
-                    color: Colors.grey[300],
-                    child: const Icon(Icons.image_not_supported),
-                  ),
+            // Icono genérico en lugar de imagen
+            Container(
+              height: 200,
+              color: Colors.grey[300],
+              child: const Icon(Icons.shopping_bag, size: 80),
+            ),
             const SizedBox(height: 16),
             Text(
-              product.name,
+              product.nombre,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             Text(
-              "Precio: \$${product.price.toStringAsFixed(0)}",
+              "Precio: \$${product.precio}",
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            const SizedBox(height: 16),
-            Text(product.description),
+            Text(
+              "Stock disponible: ${product.stock}",
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
@@ -48,3 +49,4 @@ class ProductDetail extends StatelessWidget {
     );
   }
 }
+

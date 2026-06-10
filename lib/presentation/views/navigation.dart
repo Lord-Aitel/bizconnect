@@ -26,7 +26,7 @@ class NavigationScreen extends StatelessWidget {
               onTap: () {
                 Navigator.push(  
                   context,
-                  MaterialPageRoute(builder: (_) => ProductList()),
+                  MaterialPageRoute(builder: (_) => ProductList(localId: 'localId')),
                 );
               },
             ),

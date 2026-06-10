@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../data/models/product_model.dart';
+import '../../domain/entities/product.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -21,20 +21,13 @@ class ProductCard extends StatelessWidget {
           padding: const EdgeInsets.all(12.0),
           child: Row(
             children: [
-              // Imagen del producto
-              product.imageUrl.isNotEmpty
-                  ? Image.network(
-                      product.imageUrl,
-                      width: 80,
-                      height: 80,
-                      fit: BoxFit.cover,
-                    )
-                  : Container(
-                      width: 80,
-                      height: 80,
-                      color: Colors.grey[300],
-                      child: const Icon(Icons.image_not_supported),
-                    ),
+              // Icono genérico en lugar de imagen
+              Container(
+                width: 80,
+                height: 80,
+                color: Colors.grey[300],
+                child: const Icon(Icons.shopping_bag),
+              ),
               const SizedBox(width: 16),
               // Información del producto
               Expanded(
@@ -42,24 +35,14 @@ class ProductCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      product.name,
+                      product.nombre,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text(product.description),
-                    Text(
-                      '\$${product.price.toStringAsFixed(0)}',
-                      style: const TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      'Vendedor: ${product.seller}',
-                      style: const TextStyle(fontSize: 12),
-                    ),
+                    Text("Precio: \$${product.precio}"),
+                    Text("Stock: ${product.stock} unidades"),
                   ],
                 ),
               ),

@@ -1,29 +1,86 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'dart:io';
-import '../models/product_model.dart';
+import '../../domain/entities/product.dart';
+import '../../domain/entities/local.dart';
 
 class FirebaseService {
-  final firestore = FirebaseFirestore.instance;
-  final storage = FirebaseStorage.instance;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  // Subir imagen a Firebase Storage
-  Future<String> uploadImage(File imageFile, String fileName) async {
-    final ref = storage.ref().child('products/$fileName');
-    await ref.putFile(imageFile);
-    return await ref.getDownloadURL();
+  Future<void> pruebaConexion() async {
+    await _db.collection('test').add({
+      'mensaje': 'Conexión exitosa con Firestore!',
+      'fecha': FieldValue.serverTimestamp(),
+    });
   }
 
-  // Guardar producto en Firestore
-  Future<void> addProduct(Product product) async {
-    await firestore.collection('products').add(product.toMap());
+  Future<void> agregarProducto(
+      String localId, String nombre, int precio, int stock) async {
+    await _db
+        .collection('Locales')
+        .doc(localId)
+        .collection('productos')
+        .add({
+      'nombre': nombre,
+      'precio': precio,
+      'stock': stock,
+      'fecha': FieldValue.serverTimestamp(),
+    });
   }
 
-  // Obtener lista de productos
-  Future<List<Product>> fetchProducts() async {
-    final snapshot = await firestore.collection('products').get();
+  // 🔹 Obtener productos de un local (stream en tiempo real)
+  Stream<QuerySnapshot> obtenerProductosStream(String localId) {
+    return _db
+        .collection('Locales')
+        .doc(localId)
+        .collection('productos')
+        .orderBy('fecha', descending: true)
+        .snapshots();
+  }
+
+  // 🔹 Obtener productos de un local (lista estática para ViewModel)
+Future<List<Product>> getProducts(String localId) async {
+  final snapshot = await _db
+      .collection('Locales')
+      .doc(localId)
+      .collection('productos')
+      .orderBy('fecha', descending: true)
+      .get();
+
+  return snapshot.docs.map((doc) {
+  final data = doc.data();
+  return Product(
+    id: doc.id, // ← aquí está el ID real
+    nombre: data['nombre'] ?? '',
+    precio: data['precio'] ?? 0,
+    stock: data['stock'] ?? 0,
+  );
+  }).toList();
+}
+
+  Future<List<Local>> getLocales() async {
+    final snapshot = await _db.collection('Locales').get();
+
     return snapshot.docs
-        .map((doc) => Product.fromMap(doc.data(), doc.id))
+        .map((doc) => Local.fromFirestore(doc.id, doc.data()))
         .toList();
+  }
+
+
+  Future<void> eliminarProducto(String localId, String productoId) async {
+    await _db
+        .collection('Locales')
+        .doc(localId)
+        .collection('productos')
+        .doc(productoId)
+        .delete();
+  }
+
+  Future<void> actualizarProducto(
+      String localId, String productoId, Map<String, dynamic> datos) async {
+    await _db
+        .collection('Locales')
+        .doc(localId)
+        .collection('productos')
+        .doc(productoId)
+        .update(datos);
   }
 }

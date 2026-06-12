@@ -17,37 +17,78 @@ class ProductDetail extends StatelessWidget {
             onPressed: () {
               Share.share(
                 'Producto: ${product.nombre}\n'
-                'Precio: \$${product.precio}\n'
-                'Stock disponible: ${product.stock}',
+                'Precio: \$${product.precio.toStringAsFixed(2)}\n'
+                'Stock disponible: ${product.stock}\n'
+                'Descripción: ${product.descripcion}\n'
+                'Valoración: ${product.rating}/5',
               );
             },
           ),
         ],
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: 200,
-              color: Colors.grey[300],
-              child: const Icon(Icons.shopping_bag, size: 80),
-            ),
+            // Imagen del producto
+            product.imagenUrl.isNotEmpty
+                ? Image.network(
+                    product.imagenUrl,
+                    height: 200,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  )
+                : Container(
+                    height: 200,
+                    color: Colors.grey[300],
+                    child: const Icon(Icons.shopping_bag, size: 80),
+                  ),
             const SizedBox(height: 16),
+
+            // Nombre
             Text(
               product.nombre,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
+
+            // Precio
             Text(
-              "Precio: \$${product.precio}",
+              "Precio: \$${product.precio.toStringAsFixed(2)}",
               style: Theme.of(context).textTheme.titleMedium,
             ),
+
+            // Stock
             Text(
               "Stock disponible: ${product.stock}",
               style: Theme.of(context).textTheme.bodyMedium,
             ),
+
+            const SizedBox(height: 16),
+
+            // Descripción
+            Text(
+              product.descripcion,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+
+            const SizedBox(height: 16),
+
+            // Rating en estrellas
+            Row(
+              children: List.generate(5, (index) {
+                return Icon(
+                  index < product.rating.round()
+                      ? Icons.star
+                      : Icons.star_border,
+                  color: Colors.amber,
+                );
+              }),
+            ),
+
             const SizedBox(height: 24),
+
+            // Botón de acción
             ElevatedButton(
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(

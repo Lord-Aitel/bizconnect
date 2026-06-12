@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../presentation/views/product_viewmodel.dart';
-//import '../../domain/entities/product.dart';
 import 'product_detail.dart';
 
 class ProductList extends StatelessWidget {
@@ -20,34 +19,79 @@ class ProductList extends StatelessWidget {
             );
           }
 
-          if (vm.products.isEmpty) {
-            return const Scaffold(
-              body: Center(child: Text("No hay productos disponibles")),
-            );
-          }
-
           return Scaffold(
             appBar: AppBar(title: const Text("Productos")),
-            body: ListView.builder(
-              itemCount: vm.products.length,
-              itemBuilder: (context, index) {
-                final product = vm.products[index];
-                return Card(
-                  child: ListTile(
-                    leading: const Icon(Icons.shopping_bag, color: Colors.deepPurple),
-                    title: Text(product.nombre),
-                    subtitle: Text('${product.precio} CLP — Stock: ${product.stock}'),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => ProductDetail(product: product),
-                        ),
-                      );
-                    },
+            body: Column(
+              children: [
+                // 🔎 Barra de búsqueda local
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      labelText: "Buscar producto en este local...",
+                      prefixIcon: Icon(Icons.search),
+                    ),
+                    onChanged: (value) => vm.searchLocalProducts(value),
                   ),
-                );
-              },
+                ),
+                Expanded(
+                  child: vm.searchResults.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: vm.searchResults.length,
+                          itemBuilder: (context, index) {
+                            final resultado = vm.searchResults[index];
+                            final product = resultado["producto"];
+
+                            return Card(
+                              child: ListTile(
+                                leading: const Icon(Icons.shopping_bag,
+                                    color: Colors.deepPurple),
+                                title: Text(product.nombre),
+                                subtitle: Text(
+                                    '${product.precio} CLP — Stock: ${product.stock}'),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          ProductDetail(product: product),
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                        )
+                      : vm.products.isEmpty
+                          ? const Center(
+                              child: Text("No hay productos disponibles"),
+                            )
+                          : ListView.builder(
+                              itemCount: vm.products.length,
+                              itemBuilder: (context, index) {
+                                final product = vm.products[index];
+                                return Card(
+                                  child: ListTile(
+                                    leading: const Icon(Icons.shopping_bag,
+                                        color: Colors.deepPurple),
+                                    title: Text(product.nombre),
+                                    subtitle: Text(
+                                        '${product.precio} CLP — Stock: ${product.stock}'),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) =>
+                                              ProductDetail(product: product),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                ),
+              ],
             ),
           );
         },

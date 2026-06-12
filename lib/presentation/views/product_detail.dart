@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../domain/entities/product.dart';
-
+import 'package:share_plus/share_plus.dart';
 
 class ProductDetail extends StatelessWidget {
   final Product product;
@@ -9,13 +9,26 @@ class ProductDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(product.nombre)),
+      appBar: AppBar(
+        title: Text(product.nombre),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.share),
+            onPressed: () {
+              Share.share(
+                'Producto: ${product.nombre}\n'
+                'Precio: \$${product.precio}\n'
+                'Stock disponible: ${product.stock}',
+              );
+            },
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Icono genérico en lugar de imagen
             Container(
               height: 200,
               color: Colors.grey[300],
@@ -49,4 +62,3 @@ class ProductDetail extends StatelessWidget {
     );
   }
 }
-

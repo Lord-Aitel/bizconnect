@@ -11,17 +11,16 @@ class Product {
     required this.stock,
   });
 
-  // 🔹 Constructor desde Firestore
-  factory Product.fromFirestore(Map<String, dynamic> data) {
+
+  factory Product.fromFirestore(String id, Map<String, dynamic> data) {
     return Product(
-      id: data['id'] ?? '',
+      id: id,
       nombre: data['nombre'] ?? '',
       precio: data['precio'] ?? 0,
       stock: data['stock'] ?? 0,
     );
   }
-
-  // 🔹 Convertir a Map (útil para guardar/actualizar)
+  
   Map<String, dynamic> toMap() {
     return {
       'id': id,

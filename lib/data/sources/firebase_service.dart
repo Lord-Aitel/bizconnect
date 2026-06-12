@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/entities/product.dart';
 import '../../domain/entities/local.dart';
 
+
 class FirebaseService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
@@ -17,7 +18,7 @@ class FirebaseService {
     await _db
         .collection('Locales')
         .doc(localId)
-        .collection('productos')
+        .collection('Productos')
         .add({
       'nombre': nombre,
       'precio': precio,
@@ -26,22 +27,20 @@ class FirebaseService {
     });
   }
 
-  // 🔹 Obtener productos de un local (stream en tiempo real)
   Stream<QuerySnapshot> obtenerProductosStream(String localId) {
     return _db
         .collection('Locales')
         .doc(localId)
-        .collection('productos')
+        .collection('Productos')
         .orderBy('fecha', descending: true)
         .snapshots();
   }
 
-  // 🔹 Obtener productos de un local (lista estática para ViewModel)
 Future<List<Product>> getProducts(String localId) async {
   final snapshot = await _db
       .collection('Locales')
       .doc(localId)
-      .collection('productos')
+      .collection('Productos')
       .orderBy('fecha', descending: true)
       .get();
 
@@ -69,9 +68,13 @@ Future<List<Product>> getProducts(String localId) async {
     await _db
         .collection('Locales')
         .doc(localId)
-        .collection('productos')
+        .collection('Productos')
         .doc(productoId)
         .delete();
+  }
+
+  Stream<QuerySnapshot> obtenerLocalesStream() {
+    return _db.collection('Locales').snapshots();
   }
 
   Future<void> actualizarProducto(
@@ -79,7 +82,7 @@ Future<List<Product>> getProducts(String localId) async {
     await _db
         .collection('Locales')
         .doc(localId)
-        .collection('productos')
+        .collection('Productos')
         .doc(productoId)
         .update(datos);
   }

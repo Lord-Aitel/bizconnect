@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:910531123888:android:299e14760cd833ba6bb975",
+        "android_client_info": {
+          "package_name": "cl.matias.bizconnect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9-MKYcKWqHUSVcWrmEBRNMLdMNaovM-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:910531123888:android:72d53c3466de48e86bb975",
         "android_client_info": {
           "package_name": "com.example.bizconnect"

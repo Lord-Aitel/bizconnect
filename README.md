@@ -1,4 +1,4 @@
-# BizConnect - Prototipo Funcional
+# BizConnect 
 
 Aplicación móvil desarrollada en Flutter bajo el patrón MVVM.
 Permite gestionar locales y productos, integrando Firebase (Firestore, Storage, Auth)

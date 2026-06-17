@@ -4,6 +4,7 @@ import '../../presentation/views/locales_viewmodel.dart';
 import 'product_list.dart';
 import 'mi_local_screen.dart';
 import 'about_screen.dart';
+import 'feedback_screen.dart'; 
 
 class LocalesScreen extends StatelessWidget {
   const LocalesScreen({super.key});
@@ -32,26 +33,42 @@ class LocalesScreen extends StatelessWidget {
               actions: [
                 PopupMenuButton<String>(
                   onSelected: (value) {
-                    if (value == 'mi_local') {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const MiLocalScreen()),
-                      );
-                    } else if (value == 'about') {
+                    if (value == 'about') {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (_) => const AboutScreen()),
+                      );
+                    } else if (value == 'feedback') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const FeedbackScreen()),
                       );
                     }
                   },
                   itemBuilder: (context) => [
                     const PopupMenuItem(
-                      value: 'mi_local',
-                      child: Text("Mi Local"),
+                      enabled: false,
+                      child: Text(
+                        "Opciones",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    const PopupMenuItem(
+                      value: 'feedback',
+                      child: ListTile(
+                        leading: Icon(Icons.feedback_outlined),
+                        title: Text("Feedback / Encuesta"),
+                      ),
                     ),
                     const PopupMenuItem(
                       value: 'about',
-                      child: Text("About / Créditos"),
+                      child: ListTile(
+                        leading: Icon(Icons.info_outline),
+                        title: Text("About / Créditos"),
+                      ),
                     ),
                   ],
                 ),
@@ -59,7 +76,6 @@ class LocalesScreen extends StatelessWidget {
             ),
             body: Column(
               children: [
-                // 🔎 Barra de búsqueda
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
@@ -75,17 +91,13 @@ class LocalesScreen extends StatelessWidget {
                     itemCount: vm.locales.length,
                     itemBuilder: (context, index) {
                       final local = vm.locales[index];
-
-             
                       if (local.id == vm.userLocalId) {
                         return const SizedBox.shrink();
                       }
-
                       final isLastVisited = vm.lastLocalId == local.id;
-
                       return Card(
                         child: ListTile(
-                          leading: const Icon(Icons.store, color: Colors.deepPurple),
+                          leading: const Icon(Icons.store, color: Colors.black),
                           title: Text(local.nombre),
                           subtitle: Text("ID: ${local.id}"),
                           trailing: isLastVisited
@@ -97,7 +109,6 @@ class LocalesScreen extends StatelessWidget {
                               listen: false,
                             );
                             vmProvider.setLastLocal(local.id);
-
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -111,6 +122,24 @@ class LocalesScreen extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+            bottomNavigationBar: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton.icon(
+                  icon: const Icon(Icons.store),
+                  label: const Text("Mi Local"),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const MiLocalScreen()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(50),
+                  ),
+                ),
+              ),
             ),
           );
         },

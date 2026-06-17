@@ -45,7 +45,7 @@ class ProductList extends StatelessWidget {
                             return Card(
                               child: ListTile(
                                 leading: const Icon(Icons.shopping_bag,
-                                    color: Colors.deepPurple),
+                                    color: Color.fromARGB(255, 0, 0, 0)),
                                 title: Text(product.nombre),
                                 subtitle: Text(
                                     '${product.precio} CLP — Stock: ${product.stock}'),
@@ -73,7 +73,7 @@ class ProductList extends StatelessWidget {
                                 return Card(
                                   child: ListTile(
                                     leading: const Icon(Icons.shopping_bag,
-                                        color: Colors.deepPurple),
+                                        color: Color.fromARGB(255, 0, 0, 0)),
                                     title: Text(product.nombre),
                                     subtitle: Text(
                                         '${product.precio} CLP — Stock: ${product.stock}'),

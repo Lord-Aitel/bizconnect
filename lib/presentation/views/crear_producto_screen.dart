@@ -17,7 +17,7 @@ class _CrearProductoScreenState extends State<CrearProductoScreen> {
   final _precioController = TextEditingController();
   final _stockController = TextEditingController();
   final _descripcionController = TextEditingController();
-  final _ratingController = TextEditingController(); // 🔹 Nuevo campo
+  final _ratingController = TextEditingController();
   XFile? _imagen;
 
   Future<void> _pickImage() async {
@@ -30,10 +30,10 @@ class _CrearProductoScreenState extends State<CrearProductoScreen> {
 
   Future<void> _guardarProducto() async {
     final nombre = _nombreController.text.trim();
-    final precio = int.tryParse(_precioController.text.trim()); // 🔹 Precio como int
+    final precio = int.tryParse(_precioController.text.trim());
     final stock = int.tryParse(_stockController.text.trim());
     final descripcion = _descripcionController.text.trim();
-    final rating = double.tryParse(_ratingController.text.trim()) ?? 0.0; // 🔹 Rating como double
+    final rating = double.tryParse(_ratingController.text.trim()) ?? 0.0;
 
     if (nombre.isEmpty || precio == null || stock == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -45,7 +45,7 @@ class _CrearProductoScreenState extends State<CrearProductoScreen> {
     await servicio.agregarProductoConImagen(
       widget.localId,
       nombre,
-      precio.toDouble(), 
+      precio.toDouble(),
       stock,
       descripcion,
       _imagen != null ? File(_imagen!.path) : null,

@@ -19,8 +19,6 @@ class AboutScreen extends StatelessWidget {
             Text("Créditos:"),
             Text("- mati"),
             SizedBox(height: 20),
-            Text("Feedback:"),
-            Text("Próximamente podrás enviar tus comentarios desde aquí."),
           ],
         ),
       ),

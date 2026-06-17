@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../../domain/entities/product.dart';
 import '../../domain/entities/local.dart';
 
@@ -33,7 +34,6 @@ class FirebaseService {
     }
   }
 
-  // 🔹 Agregar producto con descripción, imagen y rating
   Future<void> agregarProducto(
     String localId,
     String nombre,
@@ -54,7 +54,6 @@ class FirebaseService {
     });
   }
 
-  // 🔹 Versión con subida de imagen a Firebase Storage
   Future<void> agregarProductoConImagen(
     String localId,
     String nombre,
@@ -65,23 +64,41 @@ class FirebaseService {
     double rating,
   ) async {
     String? imageUrl;
-    if (imagen != null) {
-      final ref = FirebaseStorage.instance
-          .ref()
-          .child('Locales/$localId/Productos/${DateTime.now().millisecondsSinceEpoch}.jpg');
-      await ref.putFile(imagen);
-      imageUrl = await ref.getDownloadURL();
-    }
+    String? localPath;
 
-    await _db.collection('Locales').doc(localId).collection('Productos').add({
-      'nombre': nombre,
-      'precio': precio,
-      'stock': stock,
-      'descripcion': descripcion,
-      'imagenUrl': imageUrl,
-      'rating': rating,
-      'fecha': FieldValue.serverTimestamp(),
-    });
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        await FirebaseAuth.instance.signInAnonymously();
+      }
+
+      if (imagen != null) {
+        localPath = imagen.path;
+        try {
+          final ref = FirebaseStorage.instance
+              .ref()
+              .child('productos/${DateTime.now().millisecondsSinceEpoch}.jpg');
+          await ref.putFile(imagen);
+          imageUrl = await ref.getDownloadURL();
+        } catch (e) {
+          print('No se pudo subir a Storage, se usará ruta local');
+        }
+      }
+
+      await _db.collection('Locales').doc(localId).collection('Productos').add({
+        'nombre': nombre,
+        'precio': precio,
+        'stock': stock,
+        'descripcion': descripcion,
+        'imagenUrl': imageUrl,
+        'imagenLocal': localPath,
+        'rating': rating,
+        'fecha': FieldValue.serverTimestamp(),
+      });
+    } on FirebaseException catch (e) {
+      print('Error al subir producto: ${e.code} - ${e.message}');
+      rethrow;
+    }
   }
 
   Stream<QuerySnapshot> obtenerProductosStream(String localId) {
@@ -137,7 +154,6 @@ class FirebaseService {
         .update(datos);
   }
 
-  // 🔎 Nuevo método para obtener todos los locales con sus productos
   Future<List<Local>> getLocalesWithProducts() async {
     try {
       final localesSnapshot = await _db.collection('Locales').get();

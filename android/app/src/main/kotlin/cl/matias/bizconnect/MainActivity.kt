@@ -1,4 +1,4 @@
-package com.example.bizconnect
+package cl.matias.bizconnect
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -65,7 +65,7 @@ flowchart TD
     I --> J[Fin]
 ```
 
-## 🔄 Diagrama de Estados
+##  Diagrama de Estados
 
 ```mermaid
 stateDiagram-v2
@@ -83,7 +83,7 @@ stateDiagram-v2
     Error --> [*]
 ```
 
-## 📐 Diagrama de Secuencia - Feedback
+##  Diagrama de Secuencia - Feedback
 
 ```mermaid
 sequenceDiagram
@@ -106,7 +106,7 @@ sequenceDiagram
 Se aplicó un instrumento JSON con 9 preguntas distribuidas en tres categorías: *Usabilidad*, *Contenido* y *Compartir*.
 Los resultados fueron recolectados vía correo electrónico desde 5 participantes: Javier Molina, María José, Franco Navarrete, David y Daniel Gustavo.
 
-### 📋 Respuestas Individuales
+###  Respuestas Individuales
 
 | Categoría  | Pregunta | Javier | María José | Franco | David | Daniel | Promedio |
 |---|---|---|---|---|---|---|---|

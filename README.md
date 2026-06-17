@@ -144,10 +144,10 @@ Los resultados fueron recolectados vía correo electrónico desde 5 participante
 ###  Conclusión
 El prototipo cumple con los requisitos de QA: se aplicó un instrumento formal, se recolectaron respuestas reales de 5 participantes y se documentaron resultados cuantitativos y cualitativos. Esto evidencia la validación con usuarios externos y la retroalimentación para mejoras futuras, identificando la interfaz visual y la disposición a compartir como las áreas de mayor oportunidad.
 
-## Instalación (si no se tiene el APK)
+## Instalación 
 1. Clonar el repositorio.
 2. Ejecutar `flutter pub get`.
-3. Instalar APK desde `release/bizConnect.apk`.
+3. Instalar APK desde terminal `flutter build apk --release`.
 
 ## Recursos Multimedia
 - [Video de exposición técnica](https://youtu.be/98hLvJolCqE)
